@@ -28,7 +28,7 @@ public class PlayerCamera : MonoBehaviour
     }
 
     //this updates at the end of the frame (after we've moved the player)
-    private void LateUpdate()
+    private void Update()
     {
         if (target != null) {
             focusArea.Update(target.boxCollider.bounds);

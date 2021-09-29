@@ -30,6 +30,14 @@ public class StatePlayerController : MonoBehaviour
     public float dodgeSpeed;
     public float dodgeCooldownTime;
     private float dodgeCooldownTimer;
+
+    public GameObject parryHitbox;
+
+    public float parryTime;
+    private float parryTimer;
+
+    public float parryCooldownTime;
+    private float parryCooldownTimer;
     public PlayerManager playerManager;
 
     public BoxCollider2D boxCollider;
@@ -65,6 +73,7 @@ public class StatePlayerController : MonoBehaviour
     public void Update() {
         
         updateDodgeCooldown();
+        updateParryTimer();
     }
 
     public Vector2 CalculatePlayerVelocity(Vector2 RBvelocity, Vector2 input, float moveSpeed, float velocityXSmoothing, float velocityYSmoothing, float accelerationTime)
@@ -83,12 +92,50 @@ public class StatePlayerController : MonoBehaviour
         }
     }
 
+    
+
     public void startDodgeCooldown() {
         dodgeCooldownTimer = dodgeCooldownTime;
     }
 
     public bool canDodge() {
         return dodgeCooldownTimer <= 0;
+    }
+
+    public void startParry() {
+        parryTimer = parryTime;
+        parryHitbox.SetActive(true);
+    }
+
+    private void updateParryTimer() {
+        if (parryTimer > 0)
+        {
+            parryTimer -= Time.deltaTime;
+        } else {
+            if (parryHitbox.activeSelf) {
+                cancelParry(false);
+            }
+        }
+
+        if (parryCooldownTimer > 0) {
+            parryCooldownTimer -= Time.deltaTime;
+        }
+    }
+
+    public bool canParry() {
+        return parryCooldownTimer <= 0;
+    }
+
+    public void cancelParry(bool dodgeCancel) {
+        parryTimer = -1;
+        parryHitbox.SetActive(false);
+        if (dodgeCancel == false) {
+            startParryCooldown();
+        }
+    }
+
+    private void startParryCooldown() {
+        parryCooldownTimer = parryCooldownTime;
     }
 
     public bool tookDamage() {

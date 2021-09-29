@@ -12,6 +12,10 @@ public class PlayerIdleState : PlayerState {
 
     public override void Update(PlayerStateInput stateInput)
     {
+        if (stateInput.playerController.canParry() && stateInput.player.GetButtonDown("Parry")) {
+            stateInput.playerController.startParry();
+        }
+
         if (stateInput.playerController.tookDamage()) {
             stateInput.playerController.setDamaged(false);
             LaunchStateTransitionInfo transitionInfo = new LaunchStateTransitionInfo(stateInput.playerController.launchVelocity, stateInput.playerController.moveAfterLaunchTime, true);
@@ -20,6 +24,7 @@ public class PlayerIdleState : PlayerState {
         }
 
         if (stateInput.playerController.canDodge() && stateInput.player.GetButtonDown("Dodge")) {
+            stateInput.playerController.cancelParry(true);
             character.ChangeState<PlayerDodgeState>();
             return;
         }
@@ -47,7 +52,9 @@ public class PlayerIdleState : PlayerState {
 
 
     public override void FixedUpdate(PlayerStateInput stateInput) {
-        stateInput.playerController.HandleMovement();
+        if (stateInput.playerController.canParry()) {
+            stateInput.playerController.HandleMovement();
+        }  
     }
 
 }

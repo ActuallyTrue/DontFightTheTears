@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,7 +30,7 @@ public class PlayerDodgeState : PlayerState
 
     public override void Update(PlayerStateInput stateInput)
     {
-
+        stateInput.rb.velocity = stateInput.playerController.dodgeDirection.normalized * stateInput.playerController.dodgeSpeed;
         if (stateInput.playerController.tookDamage()) {
             stateInput.playerController.setDamaged(false);
             LaunchStateTransitionInfo transitionInfo = new LaunchStateTransitionInfo(stateInput.playerController.launchVelocity, stateInput.playerController.moveAfterLaunchTime, true);
@@ -43,6 +43,9 @@ public class PlayerDodgeState : PlayerState
             dodgeTimer -= Time.deltaTime;
             lerper += Time.deltaTime;
             stateInput.rb.drag = Mathf.Lerp(18, 0, lerper / stateInput.playerController.dodgeTime);
-        }  
+        } else
+        {
+            character.ChangeState<PlayerIdleState>();
+        }
     }
 }
