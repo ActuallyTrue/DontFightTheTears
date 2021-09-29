@@ -8,7 +8,12 @@ public class ParryController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.layer == 7)
         {
-            playerController.cancelParry(false);
+            ChargerManager charger = other.GetComponent<ChargerManager>();
+            if (charger.GetState() is ChargerAttackState) {
+                playerController.cancelParry(false);
+                other.gameObject.SetActive(false);
+            }
+            
             //lower the enemy's resolve
         }
     }

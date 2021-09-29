@@ -71,7 +71,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d7548f0a6b56d43a173eecabf5ea85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
+  playerController: {fileID: 6473804543747916588}
 --- !u!1 &3216396875803698509
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +165,7 @@ GameObject:
   - component: {fileID: 53839617114794348}
   - component: {fileID: 5256283456528818458}
   - component: {fileID: 7727712597888812194}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Avatar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 6473804543747916498}
   - component: {fileID: 6473804543747916589}
   - component: {fileID: 6473804543747916588}
-  m_Layer: 9
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -382,7 +382,7 @@ MonoBehaviour:
   parryCooldownTime: 0.2
   playerManager: {fileID: 0}
   boxCollider: {fileID: 0}
-  playerCamera: {fileID: 0}
+  playerCamera: {fileID: 531588494720652807, guid: bd6123bb26b74415bbe22591a8ef7f92, type: 3}
   dodgeDirection: {x: 0, y: 0}
   gameManager: {fileID: 0}
   anim: {fileID: 7727712597888812194}
