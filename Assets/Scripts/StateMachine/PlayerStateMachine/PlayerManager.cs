@@ -32,7 +32,6 @@ public class PlayerManager : Character<PlayerManager, PlayerState, PlayerStateIn
     public PlayerState GetState() {
         return state;
     }
-
 }
 
 public abstract class PlayerState : CharacterState<PlayerManager, PlayerState, PlayerStateInput>

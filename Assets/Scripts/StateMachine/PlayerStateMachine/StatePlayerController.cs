@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Rewired;
+using UnityEngine.SceneManagement;
 
 public class StatePlayerController : MonoBehaviour
 {
@@ -54,8 +55,10 @@ public class StatePlayerController : MonoBehaviour
     [HideInInspector]
     private bool damaged = false;
 
-    private float health = 100f;
+    public float health = 100f;
     public float invincibilityTime;
+
+    public bool canAct = true;
 
     void Start()
     {
@@ -209,6 +212,10 @@ public class StatePlayerController : MonoBehaviour
         return Vector2.zero;
     }
 
+    public void setCanAct(bool enable) {
+        canAct = enable;
+    }
+
      //void OnCollisionEnter2D(Collision2D collision)
      //{
      //    if (collision.gameObject.CompareTag("Platform"))
@@ -232,10 +239,10 @@ public class StatePlayerController : MonoBehaviour
         if (invincible == false) {
             cancelParry(false);
             setDamaged(true);
-            health -= 25f;
+            health -= 10f;
             SetPlayerInvincibility(true);
             if (health <= 0) {
-                //game manager end game
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }  
     }

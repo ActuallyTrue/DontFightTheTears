@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class GameManagerVariableHolder : MonoBehaviour
 {
-    public GameObject spawnWalls;
+    public UIManager uiManager;
 
-    public GameObject winCanvas;
+    public GameObject bossWall;
 }

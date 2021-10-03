@@ -12,6 +12,10 @@ public class PlayerIdleState : PlayerState {
 
     public override void Update(PlayerStateInput stateInput)
     {
+        if (stateInput.playerController.canAct == false) {
+            return;
+        }
+
         if (stateInput.playerController.canParry() && stateInput.player.GetButtonDown("Parry")) {
             stateInput.playerController.startParry();
         }

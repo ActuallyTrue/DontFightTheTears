@@ -18,25 +18,25 @@ public class PlayerDodgeState : PlayerState
         }
         stateInput.rb.velocity = stateInput.playerController.dodgeDirection * stateInput.playerController.dodgeSpeed;
         dodgeTimer = stateInput.playerController.dodgeTime;
+        stateInput.playerController.invincible = true;
         lerper = 0;
     }
 
     public override void ForceCleanUp(PlayerStateInput stateInput)
     {
         //stateInput.rb.velocity = Vector2.zero;
+        stateInput.playerController.invincible = false;
         stateInput.rb.drag = 0;
         stateInput.playerController.startDodgeCooldown();
     }
 
     public override void Update(PlayerStateInput stateInput)
     {
-        stateInput.rb.velocity = stateInput.playerController.dodgeDirection.normalized * stateInput.playerController.dodgeSpeed;
-        if (stateInput.playerController.tookDamage()) {
-            stateInput.playerController.setDamaged(false);
-            LaunchStateTransitionInfo transitionInfo = new LaunchStateTransitionInfo(stateInput.playerController.launchVelocity, stateInput.playerController.moveAfterLaunchTime, true);
-            character.ChangeState<PlayerLaunchState>(transitionInfo);
+        if (stateInput.playerController.canAct == false) {
             return;
         }
+
+        stateInput.rb.velocity = stateInput.playerController.dodgeDirection.normalized * stateInput.playerController.dodgeSpeed;
 
         if (dodgeTimer > 0)
         { 

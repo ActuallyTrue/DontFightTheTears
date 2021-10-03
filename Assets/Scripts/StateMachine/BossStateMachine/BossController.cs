@@ -34,6 +34,8 @@ public class BossController : MonoBehaviour
     
     public GameObject shotPrefab;
 
+    public bool canAct = true;
+
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -86,10 +88,13 @@ public class BossController : MonoBehaviour
      {
         if (collision.gameObject.layer == 8)
         {
-            StatePlayerController player = collision.gameObject.GetComponent<StatePlayerController>();
-            player.takeDamage();
-            player.launchVelocity = rb.velocity.normalized;
-            ((BossChargeState)bossManager.GetState()).parried = true;
+            PlayerState currentState = playerManager.GetState();
+            if (currentState is PlayerDodgeState == false) {
+                StatePlayerController player = collision.gameObject.GetComponent<StatePlayerController>();
+                player.takeDamage();
+                player.launchVelocity = rb.velocity.normalized;
+                ((BossChargeState)bossManager.GetState()).parried = true;
+            }
         }
      }
 
@@ -97,6 +102,10 @@ public class BossController : MonoBehaviour
         Rigidbody2D shot = Instantiate(shotPrefab, gameObject.transform.position, Quaternion.identity).GetComponent<Rigidbody2D>();
         shot.velocity = input * 20;
      }
+
+     public void setCanAct(bool enable) {
+        canAct = enable;
+    }
 
      public void takeDamage() {
          resolve -= 10f;

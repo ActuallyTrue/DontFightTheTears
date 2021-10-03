@@ -73,6 +73,10 @@ public class ChargerController : MonoBehaviour
         //rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(moveInput.x * moveSpeed, moveInput.y * moveSpeed)), 1f * Time.deltaTime);
     }
 
+    public void pushBack() {
+        rb.AddForce(new Vector2(rb.velocity.normalized.x * -50, rb.velocity.normalized.y * -50), ForceMode2D.Force);
+    }
+
      //void OnCollisionEnter2D(Collision2D collision)
      //{
      //    if (collision.gameObject.CompareTag("Platform"))
@@ -86,11 +90,15 @@ public class ChargerController : MonoBehaviour
     //    transform.parent = null;
     //}
 
-    public void OnTriggerEnter2D(Collider2D collider) {
+    public void OnCollisionEnter2D(Collision2D collider) {
         if (collider.gameObject.layer == 8) { //if it's the player
             PlayerState currentState = playerManager.GetState();
             if (currentState is PlayerDodgeState == false) {
+                StatePlayerController player = collider.gameObject.GetComponent<StatePlayerController>();
+                player.takeDamage();
+                player.launchVelocity = rb.velocity.normalized;
                 playerManager.GetStateInput().playerController.tookDamage();
+                ((ChargerAttackState) chargerManager.GetState()).hit = true;
             }
         }
     }

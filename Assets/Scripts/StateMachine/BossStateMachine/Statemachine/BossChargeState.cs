@@ -19,6 +19,9 @@ public class BossChargeState : BossState {
 
     public override void Update(BossStateInput stateInput)
     {
+        if (stateInput.bossController.canAct == false) {
+            return;
+        }
         timer -= Time.deltaTime;
         GameObject player = stateInput.playerController.gameObject;
         Vector2 chargerPos = new Vector2(stateInput.bossController.gameObject.transform.position.x, stateInput.bossController.gameObject.transform.position.y);

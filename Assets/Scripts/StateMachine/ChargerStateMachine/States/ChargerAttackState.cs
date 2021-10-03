@@ -5,6 +5,8 @@ using UnityEngine;
 public class ChargerAttackState : ChargerState {
     private Vector2 attackDir;
     private float timer;
+
+    public bool hit;
     public override void Enter(ChargerStateInput stateInput, CharacterStateTransitionInfo transitionInfo = null)
     {
         GameObject player = stateInput.playerController.gameObject;
@@ -12,6 +14,7 @@ public class ChargerAttackState : ChargerState {
         Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
         attackDir = playerPos - chargerPos;
         timer = stateInput.chargerController.attackTime;
+        hit = false;
     }
 
     public override void Update(ChargerStateInput stateInput)
@@ -22,6 +25,11 @@ public class ChargerAttackState : ChargerState {
         Vector2 playerPos = new Vector2(player.transform.position.x, player.transform.position.y);
         Vector2 targetDir = playerPos - chargerPos;
         attackDir = Vector2.MoveTowards(attackDir, targetDir, 0.08f);
+
+        if (hit) {
+            stateInput.chargerController.pushBack();
+            character.ChangeState<ChargerIdleState>();
+        }
 
         if (timer <= 0) {
             character.ChangeState<ChargerIdleState>();

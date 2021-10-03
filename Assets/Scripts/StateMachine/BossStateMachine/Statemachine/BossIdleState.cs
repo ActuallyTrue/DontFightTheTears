@@ -12,6 +12,10 @@ public class BossIdleState : BossState {
 
     public override void Update(BossStateInput stateInput)
     {
+        if (stateInput.bossController.canAct == false) {
+            return;
+        }
+        
         timer -= Time.deltaTime;
 
         if (timer <= 0) {

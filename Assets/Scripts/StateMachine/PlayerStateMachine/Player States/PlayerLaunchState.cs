@@ -27,6 +27,9 @@ public class PlayerLaunchState : PlayerState
 
     public override void Update(PlayerStateInput stateInput)
     {   
+        if (stateInput.playerController.canAct == false) {
+            return;
+        }
         timer -= Time.deltaTime;   
         if (timer <= 0) {
             character.ChangeState<PlayerIdleState>();

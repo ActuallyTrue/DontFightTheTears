@@ -9,18 +9,12 @@ public class GameManagerController : MonoBehaviour
     public GameManager gameManager;
     public GameObject playerPrefab;
     public Transform spawnPoint;  
-
-    public GameObject hazardPrefab; 
-
     private StatePlayerController playerController;
-
-    public List<Vector3> jumpPositions;
 
     // Start is called before the first frame update
     void Awake()
     {
         gameManager = FindObjectOfType<GameManager>();
-        jumpPositions = new List<Vector3>();
     }
 
     void Start() {
@@ -38,21 +32,7 @@ public class GameManagerController : MonoBehaviour
             foreach (Rewired.Player player in Rewired.ReInput.players.Players) {
                 player.controllers.ClearAllControllers();
             }
-            //SceneManager.LoadScene("Launcher");
+            SceneManager.LoadScene("Level1");
     }
-
-    public void recordJump(Vector3 position) {
-        jumpPositions.Add(position);
-    }
-
-    public void spawnHazards() {
-        foreach (Vector3 position in jumpPositions) {
-            Instantiate(hazardPrefab, position, Quaternion.identity);
-        }
-
-        jumpPositions.Clear();
-    }
-
-    
 
 }

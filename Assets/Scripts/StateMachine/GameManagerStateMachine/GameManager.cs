@@ -8,12 +8,14 @@ public class GameManager : Character<GameManager, GameManagerState, GameManagerS
     {
         stateInput.stateMachine = this;
         stateInput.variableHolder = GetComponent<GameManagerVariableHolder>();
-        stateInput.spawnWalls = stateInput.variableHolder.spawnWalls;
         stateInput.gameManagerController = GetComponent<GameManagerController>();
-        stateInput.winCanvas = stateInput.variableHolder.winCanvas;
-        stateInput.winCanvas.SetActive(false);
-        stateInput.runNum = 4;
-        stateInput.currentRun = 0;
+        stateInput.playerManager = FindObjectOfType<PlayerManager>();
+        stateInput.bossManager = FindObjectOfType<BossManager>();
+        stateInput.uiManager = stateInput.variableHolder.uiManager;
+        stateInput.uiManager.hideAll();
+        stateInput.bossWall = stateInput.variableHolder.bossWall;
+        stateInput.uiManager.showBeginningLine();
+
     }
 
     override protected void SetInitialState()
@@ -41,10 +43,12 @@ public class GameManagerStateInput : CharacterStateInput
     public GameManagerController gameManagerController;
     public GameManager stateMachine;
     public GameManagerVariableHolder variableHolder;
-    public GameObject spawnWalls;
-    public int runNum;
-    public int currentRun = 0;
+    public UIManager uiManager;
 
-    public GameObject winCanvas;
+    public PlayerManager playerManager;
+
+    public BossManager bossManager;
+
+    public GameObject bossWall;
 }
 
