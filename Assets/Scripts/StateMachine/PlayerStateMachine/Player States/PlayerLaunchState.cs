@@ -18,7 +18,7 @@ public class PlayerLaunchState : PlayerState
         } else {
             LaunchStateTransitionInfo launchTransition = (LaunchStateTransitionInfo) transitionInfo;
             timer = launchTransition.moveAfterLaunchTime;
-            stateInput.rb.velocity = new Vector2(stateInput.spriteRenderer.flipX ? launchTransition.launchVelocity.x : -launchTransition.launchVelocity.x, launchTransition.launchVelocity.y);
+            stateInput.rb.AddForce(launchTransition.launchVelocity, ForceMode2D.Force);
             stateInput.playerController.SetPlayerInvincibility(launchTransition.invincible);
         }
         //stateInput.anim.Play("Player_Jump");
@@ -48,10 +48,10 @@ public class PlayerLaunchState : PlayerState
     }
     public override void FixedUpdate(PlayerStateInput stateInput)
     {
-        if (timer <= 0)
-        {
-            stateInput.playerController.HandleLerpMovement();
-        }
+        // if (timer <= 0)
+        // {
+        //     stateInput.playerController.HandleLerpMovement();
+        // }
         
 
     }

@@ -18,7 +18,7 @@ public class PlayerIdleState : PlayerState {
 
         if (stateInput.playerController.tookDamage()) {
             stateInput.playerController.setDamaged(false);
-            LaunchStateTransitionInfo transitionInfo = new LaunchStateTransitionInfo(stateInput.playerController.launchVelocity, stateInput.playerController.moveAfterLaunchTime, true);
+            LaunchStateTransitionInfo transitionInfo = new LaunchStateTransitionInfo(stateInput.playerController.launchVelocity * 500, stateInput.playerController.moveAfterLaunchTime, true);
             character.ChangeState<PlayerLaunchState>(transitionInfo);
             return;
         }

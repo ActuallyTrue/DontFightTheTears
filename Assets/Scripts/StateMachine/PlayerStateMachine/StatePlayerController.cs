@@ -53,6 +53,8 @@ public class StatePlayerController : MonoBehaviour
     public bool invincible = false;
     [HideInInspector]
     private bool damaged = false;
+
+    private float health = 100f;
     public float invincibilityTime;
 
     void Start()
@@ -220,13 +222,22 @@ public class StatePlayerController : MonoBehaviour
     //    transform.parent = null;
     //}
 
-    public void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.gameObject.layer == 12) { //if it's a hazard
-            if (invincible == false) {
-                setDamaged(true);
-                SetPlayerInvincibility(true);
+    // public void OnTriggerEnter2D(Collider2D collider) {
+    //     if (collider.gameObject.layer == 12) { //if it's a hazard
+            
+    //     }
+    // }
+
+    public void takeDamage() {
+        if (invincible == false) {
+            cancelParry(false);
+            setDamaged(true);
+            health -= 25f;
+            SetPlayerInvincibility(true);
+            if (health <= 0) {
+                //game manager end game
             }
-        }
+        }  
     }
 
     public void SetPlayerInvincibility(bool enable) {
@@ -239,5 +250,9 @@ public class StatePlayerController : MonoBehaviour
     IEnumerator InvincibleTimer() {
         yield return new WaitForSeconds(invincibilityTime);
         SetPlayerInvincibility(false);
-    } 
+    }
+
+    public void pushBack(Vector2 input) {
+        rb.AddForce(new Vector2(input.x * -50, input.y * -50), ForceMode2D.Force);
+    }
 }
